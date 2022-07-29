@@ -20,4 +20,8 @@ public class Move {
         return col;
     }
 
+    public String toString() {
+        return (this.row + 1) + "/" + (this.col + 1);
+    }
+
 }

@@ -50,7 +50,11 @@ public class Solver {
 
     private double getMiniMax(Board node, int currentDepth) {
         if (currentDepth == 0 || !node.hasMovesLeft()) {
-            return node.getAllPossibleMoves().size();
+            int utility = node.getAllPossibleMoves().size();
+            if (node.getPlayer() != this.player) {
+                utility = utility * -1;
+            }
+            return utility ;
         }
         ArrayList<Board> children = node.getChildren();
         if (node.getPlayer() == this.player) {

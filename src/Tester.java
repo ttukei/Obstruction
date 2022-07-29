@@ -24,7 +24,9 @@ public class Tester {
         AI = opponent == '1' ? '2' : '1';
         String searchMethod = args[1];
 
-        currentBoard = new Board(opponent);
+        Board initialBoard;
+        currentBoard = new Board('O');
+        initialBoard = currentBoard;
         System.out.println(currentBoard);
 
         sc = new Scanner(System.in);
@@ -37,12 +39,16 @@ public class Tester {
             if (currentBoard.hasMovesLeft()) {
                 didPlayer2Win = singlePlayerTurn('2');
             }
+            System.out.print(currentBoard);
+            System.out.println();
+
         }
         if (didPlayer1Win) {
             System.out.println("Player 1 won!");
         } else {
             System.out.println("Player 2 won!");
         }
+        System.out.println(initialBoard.getChildren().size());
     }
 
     private static boolean singlePlayerTurn(char player) {
@@ -68,15 +74,16 @@ public class Tester {
                 currentBoard = board;
             }
         }
-        System.out.print(currentBoard);
-        System.out.println();
+
         return !currentBoard.hasMovesLeft();
     }
 
     private static boolean AITurn(Board theCurrentBoard) {
-        Solver solver = new Solver(currentBoard, 2, AI);
+        Solver solver = new Solver(currentBoard, 3, AI);
         Move move = solver.getBestMoveForAI(currentBoard);
         currentBoard = theCurrentBoard.makeMove(move);
+        System.out.println("CPU turn");
+        System.out.println("CPU choose to move: " + move);
         return !currentBoard.hasMovesLeft();
     }
 }

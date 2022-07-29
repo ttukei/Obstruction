@@ -70,7 +70,6 @@ public class Board {
     }
 
     public Board makeMove(Move move) {
-        char playerChar = this.player == '1' ? 'O' : 'X';
         char[][] newBoardState = this.boardState.clone();
         for (int i = 0; i < BOARD_SIZE; i++) {
             newBoardState[i] = this.boardState[i].clone();
@@ -79,7 +78,7 @@ public class Board {
             char nextPlayer = this.player == 'X' ? 'O' : 'X';
             Board newBoard = new Board(nextPlayer, this, newBoardState);
             newBoard.createBarrier(move.getRow(), move.getCol());
-            newBoardState[move.getRow()][move.getCol()] = playerChar;
+            newBoardState[move.getRow()][move.getCol()] = this.player;
             return newBoard;
         } else {
             return null;
