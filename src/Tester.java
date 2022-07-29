@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 public class Tester {
 
@@ -5,6 +7,7 @@ public class Tester {
     private static char AI;
     private static Board currentBoard;
     private static Scanner sc;
+    private static int DEPTH = 3;
     public static void main(String... args) {
         System.out.println(
                 " ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄         ▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄        ▄ \n" +
@@ -48,7 +51,23 @@ public class Tester {
         } else {
             System.out.println("Player 2 won!");
         }
-        System.out.println(initialBoard.getChildren().size());
+        try (FileWriter writer = new FileWriter("README.txt")) {
+
+            writer.append("Minmax Algorithm:\n" +
+                    "Board Size - (6x6)\n" +
+                    "Nodes Expanded - " + countNodes(initialBoard) + "\n" +
+                    "Depth - " + DEPTH);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static int countNodes(Board rootNode) {
+        int totalNodes = 1;
+        for (Board childNode : rootNode.getChildren()) {
+            totalNodes += countNodes(childNode);
+        }
+        return totalNodes;
     }
 
     private static boolean singlePlayerTurn(char player) {
